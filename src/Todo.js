@@ -10,6 +10,12 @@ function Todo() {
 
   const addtodo = (event) => {
     event.preventDefault();
+    const isTodoExists = todolist.some((item) => item.list === Todo);
+    if (isTodoExists) {
+      alert("Todo already exists!");
+      return;
+    }
+    
     if (Todo !== "") {
       setTodolist([...todolist, { list: Todo, id: Date.now(), status: false }]);
     }
@@ -62,7 +68,9 @@ function Todo() {
               placeholder="Enter your Text"
               aria-label="default input example"
             />
-            <button className="btn btn-success mx-3 ml-2">{editList?'UPDATE':'ADD'}</button>
+            <button className="btn btn-success mx-3 ml-2">
+              {editList ? "UPDATE" : "ADD"}
+            </button>
           </form>
           <ul className="my-2">
             {todolist.map((to) => (
