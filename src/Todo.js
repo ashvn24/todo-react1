@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { MdFileDownloadDone } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { HiOutlineTrash } from "react-icons/hi2";
 function Todo() {
+  const initialState = JSON.parse(localStorage.getItem("todolist")) || [ ];
   const [Todo, setTodo] = useState("");
-  const [todolist, setTodolist] = useState([]);
+  const [todolist, setTodolist] = useState(initialState);
   const [editList, setEditList] = useState(0);
+
+  useEffect(()=>{
+    localStorage.setItem("todolist",JSON.stringify(todolist));
+  },[todolist]);
 
   const addtodo = (event) => {
     event.preventDefault();
-    const isTodoExists = todolist.some((item) => item.list === Todo);
+    const isTodoExists = todolist.find((item) => item.list === Todo);
     if (isTodoExists) {
       alert("Todo already exists!");
       return;
